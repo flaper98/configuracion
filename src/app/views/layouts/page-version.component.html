@@ -1,0 +1,27 @@
+<ng-container *ngFor="let ultVersion of configs">
+  <ng-container *ngIf="ultVersion.estado == 'Activo'">
+ <div class="row">
+     <div class="col">
+         <mat-form-field class="example-full-width" appearance="fill">
+             <mat-label> Año </mat-label>
+             <input matInput disabled
+             [(ngModel)]="ultVersion.anio" placeholder="Ex. Pizza" >
+
+           </mat-form-field>
+     </div>
+     <div class="col">
+         <mat-form-field class="example-full-width" appearance="fill">
+             <mat-label> Versione </mat-label>
+             <input matInput disabled  [(ngModel)]="ultVersion.versionSrtm" placeholder="Ex. Pizza" >
+           </mat-form-field>
+     </div>
+     <div class="col">
+         <mat-form-field class="example-full-width" appearance="fill">
+             <mat-label>Fecha</mat-label>
+             <input matInput disabled  [(ngModel)]="fechaActual" placeholder="Ex. Pizza"  >
+           </mat-form-field>
+     </div>
+   </div>
+  </ng-container>
+</ng-container>
+   <br>
