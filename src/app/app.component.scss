@@ -1,0 +1,40 @@
+.mat-drawer-container {
+    height: 100vh;
+    .mat-drawer {
+        .mat-drawer-inner-container {
+            .side-nav-container {
+                .upper-section {
+                    height: 250px;
+                   /* background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.3)), url(https://www.devida.gob.pe/image/journal/article?img_id=465037);
+                    background-position: center;
+                    background-size: cover;
+                    background-repeat: no-repeat;*/
+                }
+                .lower-section {
+                    .mat-list {
+                        padding-top: 0;
+                        .mat-list-item {
+                            &:focus {
+                                color: red;
+                            }
+                            &:hover {
+                                color: #673AB7;
+                                font-weight: bold!important;
+                                cursor: pointer;
+                                transition: background 0.125s;
+                                background-color: rgb(169, 245, 255);
+                            }
+                            .mat-list-item-content {
+                                width: auto;
+                                min-width: 250px;
+                                border-bottom: 1px solid rgba(253, 253, 253, 0.993);
+                                /*border-bottom: 1px solid rgba(0, 0, 0, 0.12);*/
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+}

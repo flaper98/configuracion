@@ -1,0 +1,77 @@
+<div class="content" ><br><br>
+      <h1 class="title_srtm titulo">Configuracion SRTM</h1>
+      <div class="container marc_">
+        <form class="example-form">
+          <app-page-version></app-page-version>          <div class="">
+            <ul class="nav nav-tabs" role="tablist">
+              <li class="nav-item">
+                <a class="nav-link nav-link-hr active"  >Historial de Versiones</a>
+              </li>
+             <li class="nav-item">
+                <a class="nav-link" routerLink="" >Detalle de Versiones</a>
+              </li>
+
+            </ul>
+            <div class="tab-pane active table_cont">
+              <div class="tab-table-hv">
+                <table mat-table [dataSource]="configs" class="mat-elevation-z8">
+
+                      <!--- Note that these columns can be defined in any order.
+                            The actual rendered columns are set as a property on the row definition" -->
+
+                      <!-- Position Column -->
+                      <ng-container matColumnDef="anio">
+                        <th mat-header-cell *matHeaderCellDef> Año </th>
+                        <td mat-cell *matCellDef="let element1"> {{anio1}} </td>
+                      </ng-container>
+
+                      <!-- Name Column -->
+                      <ng-container matColumnDef="version">
+                        <th mat-header-cell *matHeaderCellDef>Version </th>
+                        <td mat-cell *matCellDef="let element"> {{element.versionSrtm}} </td>
+                      </ng-container>
+
+                      <!-- Weight Column -->
+                      <ng-container matColumnDef="fecha">
+                        <th mat-header-cell *matHeaderCellDef>Fecha Liberacion </th>
+                        <td mat-cell *matCellDef="let element"> {{element.fechaLiberacion | date:'dd-MM-yyyy'}} </td>
+                      </ng-container>
+                      <!-- Weight Column -->
+                      <ng-container matColumnDef="estado">
+                        <th mat-header-cell *matHeaderCellDef>Estado </th>
+                        <td mat-cell *matCellDef="let element"> {{element.estado}} </td>
+                      </ng-container>
+
+                      <!-- Symbol Column -->
+                      <ng-container matColumnDef="symbol">
+                          <th mat-header-cell *matHeaderCellDef> # </th>
+                          <td mat-cell *matCellDef="let element" >
+                            <a style="color: darkred;" (click)="selectRadioButton(element.id,element.versionSrtm)"   matTooltip="Click">
+                              <mat-radio-button value="2" ></mat-radio-button>
+                            </a>
+                              </td>
+                        </ng-container>
+
+
+                      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+
+
+                    </table>
+                   <!--<mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>-->
+               </div>
+               <div class="btn-detalle">
+                 <!-- <a class="btn-select"><button mat-raised-button color="warn" data-bs-toggle="modal" data-bs-target="#exampleModal">Caracteristica de version</button></a>-->
+                  <a><button mat-raised-button color="warn" (click)="moveToSelectedTab(this.idVersionConfig)">Detalle de Version</button></a>
+                  &nbsp;
+                  <a><button mat-raised-button color="warn" routerLink="/srtm/config" >Nueva Version</button></a>
+                  &nbsp;
+
+                  <a><button mat-raised-button color="warn"   (click)="moveToSelectedTab2(this.idVersionConfig2)" >Editar Version</button></a>
+                </div>
+           </div>
+      </div>
+
+
+

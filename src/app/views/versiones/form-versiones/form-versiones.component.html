@@ -1,0 +1,122 @@
+
+<div class="content" ><br><br>
+  <h1 class="title_srtm titulo">Configuracion SRTM</h1>
+  <div class="container marc_">
+  <form class="example-form"  >
+      <app-page-version></app-page-version>
+      <div class="">
+        <ul class="nav nav-tabs" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link"  routerLink="/srtm/versiones"  >Historial de Versiones</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link nav-link-hr active" >Detalle de Versiones</a>
+          </li>
+
+        </ul>
+        <!-- Tab panes -->
+        <form #versionForm="ngForm" >
+      <div class="tab-content">
+        <div ><br>
+          <div class="card">
+              <div class="card-body"  >
+                    <div class="row spacio_">
+
+                     <div class="col-6">
+                        <div class="form-group row">
+                          <label for="FechaLiberacion" class="col-sm-4 col-form-label letra">Fecha Liberacion</label>
+                          <div class="col-sm-4">
+                              <input   type="date" [(ngModel)]="config.fechaLiberacion "  class="form-control form-control-sm"  name="FechaLiberacion" required  #fechaliber="ngModel" placeholder = currentDate   >
+                              <div *ngIf="fechaliber.invalid && (fechaliber.dirty || fechaliber.touched) " class= "alert alert-danger">
+                                <div *ngIf="fechaliber.errors?.required">
+                                  <b>*Campo Obligatorio</b>
+                                </div>
+                                 </div>
+                            </div>
+                        </div>
+                      </div>
+
+                      <div class="col-6">
+                        <div class="form-group row">
+                          <label for="anio" class="col-sm-3 col-form-label letra">Año</label>
+                          <div class="col-sm-3">
+
+                                 <input [(ngModel)]="anio1" type="text" class="contenido form-control form-control-sm text-año"  name="anio" disabled  >
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                     <div class="row spacio_">
+
+                      <div class="col-6">
+                        <div class="form-group row">
+                          <label for="versionSrtm" class="col-sm-4 col-form-label letra">Version</label>
+                          <div class="col-sm-4">
+                                  <input [(ngModel)]="config.versionSrtm" type="text" class=" contenido form-control form-control-sm"  name="versionSrtm" #version="ngModel" required  (keydown)="keyDownEvent($event)"  (keyup)="keyUpEvent(versionSrtm)" #versionSrtm maxlength="8">
+                                  <div *ngIf="version.invalid && (version.dirty || version.touched) " class= "alert alert-danger">
+                                    <div *ngIf="version.errors?.required">
+                                      <b>*Campo Obligatorio</b>
+                                    </div>
+                                     </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-6">
+                        <div class="form-group row">
+                          <label for="Periodo" class="col-sm-3 col-form-label letra">Tipo Version</label>
+                          <div class="col-sm-4">
+                            <select   class="form-select form-select-sm"  [(ngModel)]="config.estado" name="Estado" value="Estado" required #estado="ngModel">
+                              <option selected>{{config.estado}}</option>
+                              <option  *ngFor= "let estado of Estado"  [ngValue]> {{estado}} </option>
+                             </select>
+                             <div *ngIf="estado.invalid && (estado.dirty || estado.touched) " class= "alert alert-danger">
+                              <div *ngIf="estado.errors?.required">
+                                <b>*Campo Obligatorio</b>
+                              </div>
+                               </div>
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row spacio_">
+                      <div class="col-12">
+                        <div class="form-group row">
+                          <label   for="rutaArchivo" class="col-sm-2 col-form-label letra">Link de Descarga</label>
+                          <div class="col-sm-10">
+
+                                <input   [(ngModel)]="config.urlDescarga"  type="text" class=" contenido form-control form-control-sm "  name="rutaArchivo" required #ruta="ngModel">
+                                  <!--<button type="button" class="btn  btn-secondary btn-sm contenido ruta "><img style="width: 20px; height: 20px;" src="assets/img/doc.png" alt="" loading="lazy" /></button>-->
+                                  <div *ngIf="ruta.invalid && (ruta.dirty || ruta.touched) " class= "alert alert-danger">
+                                    <div *ngIf="ruta.errors?.required">
+                                      <b>*Campo Obligatorio</b>
+                                    </div>
+                                     </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+              </div>
+            </div>
+            <br>
+
+              <a><button mat-raised-button color="warn"   (click)="create()"  [disabled]="!versionForm.form.valid">Crear</button></a>
+
+
+          </div>
+
+
+      </div>
+    </form>
+
+    </div>
+
+  </form>
+
+
+  </div>
+</div>
+
