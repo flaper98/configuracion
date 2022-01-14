@@ -1,101 +1,156 @@
-<div class="content" ><br><br>
+<div class="content">
+  <br /><br />
   <h1 class="title_srtm titulo">Configuracion SRTM</h1>
   <div class="container marc_">
-  <form class="example-form">
+    <form class="example-form">
       <app-page-version></app-page-version>
       <div class="">
         <ul class="nav nav-tabs" role="tablist">
           <li class="nav-item">
-            <a class="nav-link"  routerLink="/srtm/versiones"  >Historial de Versiones</a>
+            <a class="nav-link" routerLink="/srtm/versiones"
+              >Historial de Versiones</a
+            >
           </li>
           <li class="nav-item">
-            <a class="nav-link nav-link-hr active" >Detalle de Version</a>
+            <a class="nav-link nav-link-hr active">Detalle de Version</a>
           </li>
-
         </ul>
         <!-- Tab panes -->
-      <div class="tab-content">
-        <div ><br>
-          <div class="card">
-              <div class="card-body"  >
-                 <div class="row spacio_">
-                        <div class="col-6">
-                        <div class="form-group row">
-                          <label for="version_srtm" class="col-sm-4 col-form-label letra">Fecha Liberacion</label>
-                          <div class="col-sm-5">
-                            <input  type="datetime-local" [(ngModel)]="config.fechaLiberacion" class="form-control form-control-sm "  name="Fecha_liberacion" placeholder="this.fechaliberacion1| date:'dd-MM-yyyy'"  >
-                           </div>
-                        </div>
+        <div class="tab-content">
+          <div>
+            <br />
+            <div class="card">
+              <div class="card-body">
+                <div class="row spacio_">
+                  <div class="col-6">
+                    <div class="form-group row">
+                      <label
+                        for="version_srtm"
+                        class="col-sm-4 col-form-label letra"
+                        >Fecha Liberacion</label
+                      >
+                      <div class="col-sm-5">
+                        <ng-container>
+                          <input
+                            type="date"
+                            [(ngModel)]="config.fechaLiberacion"
+                            [value]="
+                              config.fechaLiberacion | date: 'dd-MM-yyyy'
+                            "
+                            class="form-control form-control-sm"
+                            name="version_srtm"
+                          />
+                        </ng-container>
                       </div>
+                    </div>
+                  </div>
 
-                      <div class="col-6">
-                        <div class="form-group row">
-                          <label for="intervaloEje" class="col-sm-4 col-form-label letra">Año</label>
-                          <div class="col-sm-3">
-                              <div class="contenedor">
-                                  <input [(ngModel)]="anio1" type="number" class=" contenido form-control form-control-sm texto-año "  name="Año"  disabled  >
-                              </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      </div>
-
-                      <div class="row spacio_">
-
-                        <div class="col-6">
-                          <div class="form-group row">
-                            <label for="intervaloEje" class="col-sm-4 col-form-label letra">Version</label>
-                            <div class="col-sm-5">
-                                <div class="contenedor">
-                                    <input [(ngModel)]="config.versionSrtm" type="text" class=" contenido form-control form-control-sm"  name="versionSrtm"   >
-                                </div>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div class="col-6">
-                          <div class="form-group row">
-                            <label for="Periodo" class="col-sm-4 col-form-label letra">Tipo Version</label>
-                            <div class="col-sm-5">
-                              <select   class="form-select form-select-sm"  [(ngModel)]="config.estado" name="Estado" value="Estado">
-                                <option selected>{{config.estado}}</option>
-                                <option  *ngFor= "let estado of Tipo_Version"  [ngValue]> {{estado}} </option>
-                               </select>
-
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                    <div class="row spacio_">
-                      <div class="col-12">
-                        <div class="form-group row">
-                          <label   for="rutaArchivo" class="col-sm-2 col-form-label letra">Link de Descarga</label>
-                          <div class="col-sm-8">
-                              <div class="contenedor">
-
-                                <input   [(ngModel)]="config.urlDescarga"  type="text" class=" contenido form-control form-control-sm "  name="rutaArchivo" >
-                                  <!--<button type="button" class="btn  btn-secondary btn-sm contenido ruta "><img style="width: 20px; height: 20px;" src="assets/img/doc.png" alt="" loading="lazy" /></button>-->
-                              </div>
-
-                          </div>
+                  <div class="col-6">
+                    <div class="form-group row">
+                      <label
+                        for="intervaloEje"
+                        class="col-sm-4 col-form-label letra"
+                        >Año</label
+                      >
+                      <div class="col-sm-3">
+                        <div class="contenedor">
+                          <input
+                            [(ngModel)]="anio1"
+                            type="number"
+                            class="
+                              contenido
+                              form-control form-control-sm
+                              texto-año
+                            "
+                            name="Año"
+                            disabled
+                          />
                         </div>
                       </div>
                     </div>
+                  </div>
+                </div>
+
+                <div class="row spacio_">
+                  <div class="col-6">
+                    <div class="form-group row">
+                      <label
+                        for="intervaloEje"
+                        class="col-sm-4 col-form-label letra"
+                        >Version</label
+                      >
+                      <div class="col-sm-5">
+                        <div class="contenedor">
+                          <input
+                            [(ngModel)]="config.version"
+                            type="text"
+                            class="contenido form-control form-control-sm"
+                            name="versionSrtm"
+                            (keydown)="keyDownEvent($event)"
+                            (keyup)="keyUpEvent(versionSrtm)"
+                            #versionSrtm
+                            maxlength="8"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-6">
+                    <div class="form-group row">
+                      <label for="Periodo" class="col-sm-4 col-form-label letra"
+                        >Tipo Version</label
+                      >
+                      <div class="col-sm-5">
+                        <select
+                          class="form-select form-select-sm"
+                          [(ngModel)]="config.estado"
+                          name="Estado"
+                          value="Estado"
+                        >
+                          <option selected>{{ config.estado }}</option>
+                          <option *ngFor="let estado of Tipo_Version" [ngValue]>
+                            {{ estado }}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row spacio_">
+                  <div class="col-12">
+                    <div class="form-group row">
+                      <label
+                        for="rutaArchivo"
+                        class="col-sm-2 col-form-label letra"
+                        >Link de Descarga</label
+                      >
+                      <div class="col-sm-8">
+                        <div class="contenedor">
+                          <input
+                            [(ngModel)]="config.urlDescarga"
+                            type="text"
+                            class="contenido form-control form-control-sm"
+                            name="rutaArchivo"
+                          />
+                          <!--<button type="button" class="btn  btn-secondary btn-sm contenido ruta "><img style="width: 20px; height: 20px;" src="assets/img/doc.png" alt="" loading="lazy" /></button>-->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-            <br>
-              <a><button mat-raised-button color="warn"  (click)="update()" >Editar</button></a>
-
+            <br />
+            <a
+              ><button mat-raised-button color="warn" (click)="update()">
+                Editar
+              </button></a
+            >
           </div>
-
+        </div>
       </div>
-    </div>
-
-  </form>
-
-
+    </form>
   </div>
-
 </div>

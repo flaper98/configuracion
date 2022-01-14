@@ -54,12 +54,26 @@
                         <div class="form-group row">
                           <label for="versionSrtm" class="col-sm-4 col-form-label letra">Version</label>
                           <div class="col-sm-4">
-                                  <input [(ngModel)]="config.versionSrtm" type="text" class=" contenido form-control form-control-sm"  name="versionSrtm" #version="ngModel" required  (keydown)="keyDownEvent($event)"  (keyup)="keyUpEvent(versionSrtm)" #versionSrtm maxlength="8">
-                                  <div *ngIf="version.invalid && (version.dirty || version.touched) " class= "alert alert-danger">
+                                <!--  <input [(ngModel)]="config.version" type="text" class=" contenido form-control form-control-sm"  name="versionSrtm" #version="ngModel" required  (keydown)="keyDownEvent($event)"  (keyup)="keyUpEvent(versionSrtm)" #versionSrtm maxlength="8"  >
+                                  -->
+                                  <input [(ngModel)]="config.version" type="text" class=" contenido form-control form-control-sm"  name="version" #version="ngModel" required  maxlength="8"  >
+
+                                  <div *ngIf="version.invalid && (version.dirty || version.touched) " class= "alert alert-danger" >
                                     <div *ngIf="version.errors?.required">
                                       <b>*Campo Obligatorio</b>
                                     </div>
+
+                                    <div *ngIf="version.hasError('notAvailable')">
+
+                                      <b>
+                                        *Version Ya existe
+                                      </b>
+
+                                    </div>
+
+
                                      </div>
+
                           </div>
                         </div>
                       </div>

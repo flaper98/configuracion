@@ -1,10 +1,14 @@
+import { MyValidaciones } from './../../../utils/MyValidaciones';
+import { config } from 'rxjs';
+import { AbstractControl, AsyncValidatorFn, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { formatDate } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Config } from './../../../models/config';
 import { ConfigService } from './../../../services/config.service';
-import { Component, OnInit } from '@angular/core';
-import Swal from 'sweetalert2';
+import { Component, OnInit, Input, APP_ID } from '@angular/core';
+import swal from 'sweetalert2';
 import { animation } from '@angular/animations';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-form-versiones',
@@ -14,33 +18,52 @@ import { animation } from '@angular/animations';
 export class FormVersionesComponent implements OnInit {
 
   public config : Config = new Config;
+  config1 : Config[] = [] ;
   Estado : string[] = ['Version Liberada'];
   errores! :  String [];
   anio1! : number ;
   fecha! : String;
   textoSinFormato!  : string;
   fechaLiberacion1!:String;
+  versiones23!: String;
   public currentDate: Date = new Date();
+
+  public form! : FormGroup;
 
   constructor(private configServer : ConfigService,
               private router: Router,
               private activaterouter: ActivatedRoute,
-              ) { }
+              private fb :  FormBuilder
+              ) {
+
+                this.buildForm;
+
+              }
 
   ngOnInit(): void {
     this.cargarVersion();
     this.anio1=new Date().getFullYear();
 
+
+  }
+ private buildForm(){
+  this.versiones23 = this.config.version;
+  console.log('buildform',this.versiones23 );
+
+
+  this.form = this.fb.group({
+    version : ['' , Validators.required,MyValidaciones.validVersiones(this.configServer) ],
+
+
+    });
   }
 
+   create(): void{
 
-  public create(): void{
-
-    this.configServer.create(this.config).subscribe(
-
-      ( config ) => {
+    this.configServer.create(this.config).subscribe((config): void  => {
         this.router.navigate(['srtm/versiones']);
-        Swal.fire('Nueva Version', `Nueva ${config.versionSrtm} ha sido creado con éxito`, 'success');
+        swal('Nueva Version', `ha sido creado con éxito`, 'success');
+
       },
       err => {
         this.errores = err.error.errors as string[];
@@ -76,41 +99,49 @@ export class FormVersionesComponent implements OnInit {
 
     });
   }
-
-
-
   keyDownEvent(e:any){
     // Permitir la tecla para borrar
-    if (e.key == 'Backspace') {return true;
+    if (e.key == 'Backspace') {
+      return true;
     }
     // Permitir flecha izquierda
     if (e.key == 'ArrowLeft')
     {return true;}
     // Permitir flecha derecha
-    if (e.key == 'ArrowRight'){ return true;
+    if (e.key == 'ArrowRight'){
+       return true;
     }
     // Bloquear tecla de espacio
-    if (e.key == ' ') {return false;}
+    if (e.key == ' ')
+    {return false;}
 
     // Bloquear tecla si no es un numero
-    if (isNaN(e.key)){ return false;}
+    if (isNaN(e.key)){
+       return false;}
    return true;
   }
 
-  keyUpEvent(versionSrtm: any){
 
-    versionSrtm.value = versionSrtm.value
+
+  keyUpEvent(versionSrtm: any){
+    /*versionSrtm.value = versionSrtm.value
                 // Borrar todos los espacios
-                .replace(/\s/g, '');
+                .replace(/\s/g , '')*/
 
        //guardar texto sin formato en la variable textoSinFormato
-       this.textoSinFormato = versionSrtm.value;
 
-       versionSrtm.value = versionSrtm.value
+      ///////// versionSrtm.value = versionSrtm.value
                 // Agregar un espacio cada dos numeros
-                .replace(/([0-9]{2})/g, '$1 ')
-                // Borrar espacio al final
-                .trim();
+             //////////   .replace(/\D/g, "")
+            //////////    .replace(/([0-9]{2})$/, '$1')
+            /////////    .replace(/\B(?=(\d{2})+(?!\d)\.?)/g, ".");                // Borrar espacio al final
+                ///([0-9]{2})/g , "$1"
+
+                var num = versionSrtm.value.replace(/\./g,'');
+                if(!isNaN(num)){
+                num = num.toString().split('').reverse().join('').replace(/(?=\d*\.?)(\d{2})/g,'$1.');
+                num = num.split('').reverse().join('').replace(/^[\.]/,'');
+                versionSrtm.value = num;
 
   }
 
@@ -118,3 +149,23 @@ export class FormVersionesComponent implements OnInit {
 
 }
 
+
+validateEmail(control: AbstractControl)  {
+  const value = control.value;
+  return this.configServer.getVersiones(value)
+  .pipe(
+    map(response => {
+      const isEmailAvailable = response.version;
+      return isEmailAvailable ? null : {notAvailable: true};
+    })
+  );
+
+
+/*function numeral(val: any) {
+  throw new Error('Function not implemented.');*/
+}
+
+
+
+
+}

@@ -1,8 +1,10 @@
+import { AsyncValidatorFn } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Injectable } from "@angular/core";
 import { Config } from '../models/config';
-import {catchError, map}from 'rxjs/operators';
-import { Observable,throwError,} from 'rxjs';
+import {catchError, }from 'rxjs/operators';
+import { Observable,throwError} from 'rxjs';
+import { map } from 'rxjs/operators';
 import { HttpClient, HttpClientModule,HttpHeaders,} from '@angular/common/http';
 import Swal from "sweetalert2";
 import { URL_BACKEND } from '../config/configu';
@@ -11,18 +13,21 @@ import { URL_BACKEND } from '../config/configu';
 @Injectable()
 export class ConfigService {
     //  private urlEndPoint: string  = URL_BACKEND + '/api/nsrtm/v1/configuracion';
-   private urlEndPoint: string  = ' http://localhost:8080/api/nsrtm/v1/configuracion';
+   private urlEndPoint: string  = ' http://localhost:8080/api/nsrtm/v1/versiones';
 
 
     //private urlEndPoint2: string =  URL_BACKEND +  '/api/nsrtm/v1/configuracion/update';
-    private urlEndPoint2: string =  'http://localhost:8080/api/nsrtm/v1/configuracion/update';
+    private urlEndPoint2: string =  'http://localhost:8080/api/nsrtm/v1/versiones/update';
 
 
     //private urlEndPoint3: string =  URL_BACKEND +  '/api/nsrtm/v1/configuracion/getById';
-    private urlEndPoint3: string = 'http://localhost:8080/api/nsrtm/v1/configuracion/getById';
+    private urlEndPoint3: string = 'http://localhost:8080/api/nsrtm/v1/versiones/getById';
 
     //private urlEndPoint4: string =  URL_BACKEND +  '/api/nsrtm/v1/configuracion/create';
-    private urlEndPoint4: string =    'http://localhost:8080/api/nsrtm/v1/configuracion/create';
+    private urlEndPoint4: string =    'http://localhost:8080/api/nsrtm/v1/versiones/create';
+
+
+    private urLEndPoint5: String = 'http://localhost:8080/api/nsrtm/v1/versiones/version?version'
 
 
 
@@ -40,6 +45,14 @@ export class ConfigService {
         return this.http.post<Config>(this.urlEndPoint2,config, {headers: this.httpHeaders})
 
     } */
+
+    getVersiones(version : String ): Observable<Config>
+    {
+      console.log("rutasversiones", version , this.urLEndPoint5 )
+      return this.http.get<Config>(`${this.urLEndPoint5}=${version}`);
+
+    }
+
     getBuscar(id: string):Observable<Config>{
         return this.http.get<Config>(`${this.urlEndPoint3}/${id}`)
       }
@@ -61,7 +74,7 @@ export class ConfigService {
             }
 
             console.error(e.error.mensaje);
-            Swal.fire(e.error.mensaje, e.error.error, 'error');
+            Swal(e.error.mensaje, e.error.error, 'error');
             return throwError(e);
           })
         );

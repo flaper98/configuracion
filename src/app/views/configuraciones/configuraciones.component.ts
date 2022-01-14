@@ -82,7 +82,7 @@ export class ConfiguracionesComponent implements OnInit {
   update(): void {
     this.configServer.update(this.config).subscribe((config) => {
       this.router.navigate(['/srtm/versiones']);
-      swal.fire(
+      swal(
         'Configuración Actualizado',
         `actualizado con éxito!`,
         'success'
@@ -98,7 +98,7 @@ export class ConfiguracionesComponent implements OnInit {
 
       config => {
         this.router.navigate(['srtm/versiones']);
-        Swal.fire('Nueva Version', `Nueva ${config.versionSrtm} ha sido creado con éxito`, 'success');
+        Swal('Nueva Version', `Nueva ${config.version} ha sido creado con éxito`, 'success');
       },
       err => {
         this.errores = err.error.errors as string[];

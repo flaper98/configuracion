@@ -23,6 +23,8 @@ export class UpdateConfiguracionesComponent implements OnInit {
   anio1! : number ;
   fechaliberacion1!:String;
 
+  fechaa!: String;
+
   habilitar: boolean = true;
   periodolist: string[] = ['Diariamente', 'Semanalmente', 'Mensualmente'];
   constructor(
@@ -49,6 +51,9 @@ export class UpdateConfiguracionesComponent implements OnInit {
     this.datos();
     this.cargarVersion();
     this.anio1=new Date().getFullYear();
+    this.fechaa = new Date().toISOString().split('T')[0];
+
+
 
   }
 
@@ -69,37 +74,69 @@ export class UpdateConfiguracionesComponent implements OnInit {
           const locale = 'en-US';
           console.log('formato', config);
           console.log('formato', config.fechaLiberacion);
-          this.fechaliberacion1 = formatDate(config.fechaLiberacion, format, locale);
+          config.fechaInicio = formatDate(config.fechaInicio, format, locale);
+          //config.fechaLiberacion = formatDate(config.fechaLiberacion, format, locale);
           console.log('formato limpio', config.fechaLiberacion);
         });
       }
       this.cargarData(id);
     });
   }
-
   update(): void {
     this.configServer.update(this.config).subscribe((config) => {
       this.router.navigate(['/srtm/versiones']);
-      swal.fire(
+      swal(
         'Configuración Actualizado',
         `actualizado con éxito!`,
         'success'
       );
     });
   }
-
-
   public create(): void{
-
 
     this.configServer.create(this.config).subscribe(
 
       response => this.router.navigate(['srtm/versiones'])
-
     )
+  }
+  keyDownEvent(e:any){
+    // Permitir la tecla para borrar
+    if (e.key == 'Backspace') {
+      return true;
+    }
+    // Permitir flecha izquierda
+    if (e.key == 'ArrowLeft')
+    {return true;}
+    // Permitir flecha derecha
+    if (e.key == 'ArrowRight'){
+       return true;
+    }
+    // Bloquear tecla de espacio
+    if (e.key == ' ')
+    {return false;}
 
+    // Bloquear tecla si no es un numero
+    if (isNaN(e.key)){
+       return false;}
+   return true;
+  }
+
+  keyUpEvent(versionSrtm: any){
+
+
+                var num = versionSrtm.value.replace(/\./g,'');
+                if(!isNaN(num)){
+                num = num.toString().split('').reverse().join('').replace(/(?=\d*\.?)(\d{2})/g,'$1.');
+                num = num.split('').reverse().join('').replace(/^[\.]/,'');
+                versionSrtm.value = num;
 
   }
+
+
+
+}
+
+
 
 }
 

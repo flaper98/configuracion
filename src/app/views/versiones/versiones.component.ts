@@ -7,10 +7,14 @@ import { VersionService  } from '../../services/version.service';
 import { config } from 'rxjs';
 import { Router } from '@angular/router';
 import {MatPaginator} from '@angular/material/paginator';
-import {MatTableDataSource} from '@angular/material/table';
-import {MatSort} from '@angular/material/sort';
+import {MatTableDataSource, _MatTableDataSource } from '@angular/material/table';
+import {MatSort, Sort} from '@angular/material/sort';
 import {MatDialog} from '@angular/material/dialog';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import { OrderByPipe } from 'src/app/pipe/order-by.pipe';
+import { throwToolbarMixedModesError } from '@angular/material/toolbar';
+import { LiveAnnouncer } from '@angular/cdk/a11y';
+
 
 
 @Component({
@@ -20,13 +24,15 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 })
 export class VersionesComponent implements OnInit {
   displayedColumns: string[] = ['anio', 'version', 'fecha','estado', 'symbol'];
-  dataSource! : MatTableDataSource<any>;
+  dataSource! : MatTableDataSource<Config>;
   versionsVar:string ="";
 
   idVersionConfig!: string;
   idVersionConfig2!: string;
 
   @ViewChild(MatPaginator,{static: true}) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+
 public varAnio = "";
  configs: Config[] = [];
 versions: Version[] = [];
@@ -55,7 +61,9 @@ anio1! : number ;
                private versionService : VersionService ,
                private myRoute: Router,
                public dialog: MatDialog,
-               private _snackBar: MatSnackBar   ) {
+               private _snackBar: MatSnackBar,
+               private _liveAnnouncer: LiveAnnouncer
+                ) {
 
    /*new Date(String) ;
     let dateString1= '10-06-2015'
@@ -73,11 +81,15 @@ anio1! : number ;
     this.method2CallForDblClick;
     this.BuscarVersion;
     this.anio1=new Date().getFullYear();
+    //sthis.dataSource.sort = this.sort;
 
 this.configService.getConfig().subscribe(
   data => {this.configs = data
            this.dataSource = new MatTableDataSource(this.configs);
-           this.dataSource.paginator = this.paginator;}
+           this.dataSource.paginator = this.paginator;
+           this.dataSource.sort = this.sort;
+
+          }
 
 );
 
@@ -85,6 +97,7 @@ this.versionService.getversion().subscribe(
   data => {this.versions = data}
 
 );
+
 
 
   }
@@ -188,10 +201,41 @@ this.selectUsers;
 }
 
 
+keyUpEvent(versionSrtm: any){
+
+  /*versionSrtm.value = versionSrtm.value
+              // Borrar todos los espacios
+              .replace(/\s/g , '')*/
+
+     //guardar texto sin formato en la variable textoSinFormato
+
+     versionSrtm.value = versionSrtm.value
+              // Agregar un espacio cada dos numeros
+              .replace(/\D/g, "")
+              .replace(/([0-9])([0-9]{2})$/, '$1.$2')
+              .replace( ".");                // Borrar espacio al final
+              ///([0-9]{2})/g , "$1"
+
+
+}
+
+announceSortChange(sortState: Sort) {
+  // This example uses English messages. If your application supports
+  // multiple language, you would internationalize these strings.
+  // Furthermore, you can customize the message to add additional
+  // details about the values being sorted.
+  if (sortState.direction) {
+    this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
+  } else {
+    this._liveAnnouncer.announce('Sorting cleared');
+  }
+}
 
 
 
 }
+
+
 function doTheStuffHere() {
   throw new Error('Function not implemented.');
 }

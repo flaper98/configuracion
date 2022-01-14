@@ -1,8 +1,13 @@
+import { DecimalPipe } from "@angular/common";
+
 export class Config {
+    push(arg0: any) {
+      throw new Error('Method not implemented.');
+    }
 
     id!: string;
     anio!: string;
-    versionSrtm!: string;
+    version!: String;
     fecha_instalacion!: Date ;
     InicioSrtm!: Date;
     fechaLiberacion! : Date;
@@ -16,5 +21,6 @@ export class Config {
     estado!: string;
     mensaje: any;
     flag: boolean = false;
+    config: any;
 
 }

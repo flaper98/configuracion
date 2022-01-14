@@ -1,3 +1,4 @@
+import { config } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { Config } from '../../models/config';
 import { ConfigService  } from '../../services/config.service';
@@ -9,10 +10,8 @@ import { DatePipe, formatDate } from "@angular/common";
   styleUrls: ['./page-version.component.scss']
 })
 export class PageVersionComponent implements OnInit {
-  anioVar = '2021'
-  versionVar ='2.0'
+
   fechaVar!: String;
-  var : string = '222'
   configs: Config[] = [];
   fechaActual! : Date;
   fechaActual1!: String;
@@ -20,8 +19,15 @@ export class PageVersionComponent implements OnInit {
   locale = 'en-ES';
    require! : String ;
   desdeStr! : String;
+  ultiversion: String = '' ;
+  anio1!: number;
+  validVersion: String [] = [] ;
+
+
+
 
   public currentDate: Date = new Date();
+  valid1!: string;
 
   constructor(private configService: ConfigService ,
     public datePipe: DatePipe,) { }
@@ -31,6 +37,7 @@ export class PageVersionComponent implements OnInit {
 this.mostrarUltimaVersionConfig();
 //this.fechaActual = new Date().toISOString().split('T')[0];
 this.fechaActual = new Date();
+this.anio1=new Date().getFullYear();
 
 
   }
@@ -55,6 +62,58 @@ this.fechaActual = new Date();
   );
   console.log("prueba",this.configs);
   }
+
+   /* nuevaVersion: String = '';
+    VersionACtual: String[] = [];
+  validar_version(veract : String ): Boolean{
+        var fechas;
+        var fehcas2;
+
+        var valid1 ;
+        var valid2;
+        var valid3;
+
+    for(let index = 0; index < this.configs.length; index++) {
+
+      if(this.configs[index].versionSrtm > this.valid1){
+
+
+        this.valid1=this.configs[index].versionSrtm;
+        console.log('probando version' + valid1)
+
+        /*this.validVersion = this.configs[index].versionSrtm.split('.');
+        this.VersionACtual = veract.split('.');
+        console.log("Validar Version" , this.validVersion);
+
+        for(let f=0 ; f < this.validVersion.length ; f++){
+
+          if(f==0){
+            valid1 = this.validVersion[f];
+          }
+          if(f==1){
+            valid2 = this.validVersion[f];
+
+            if(valid2 > this.validVersion[f]){
+
+            console.log('valid2' + this.validVersion)
+            }
+          }
+          if(f==2){
+            valid3 = this.validVersion[f];
+          }
+
+          //this.nuevaVersion = this.validVersion[f]+ this.validVersion[(f+1)] ;
+            console.log("Mostrar Nueva Version" , this.nuevaVersion)
+        }
+      }
+
+    }
+  }}
+    return true;
+
+  }
+  */
+
 
 
 

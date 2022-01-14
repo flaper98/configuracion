@@ -51,7 +51,7 @@
                             <label for="intervaloEje" class="col-sm-4 col-form-label letra">Version</label>
                             <div class="col-sm-5">
                                 <div class="contenedor">
-                                    <input [(ngModel)]="config.versionSrtm" type="text" class=" contenido form-control form-control-sm"  name="intervaloEje"  disabled  >
+                                    <input [(ngModel)]="config.version" type="text" class=" contenido form-control form-control-sm"  name="intervaloEje"  disabled  >
                                 </div>
                             </div>
                           </div>
@@ -65,7 +65,6 @@
                                 <option selected>{{config.estado}}</option>
                                 <option  *ngFor= "let estado of Estado"  [ngValue]> {{estado}} </option>
                                </select>
-
                             </div>
                           </div>
                         </div>

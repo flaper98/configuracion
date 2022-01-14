@@ -12,7 +12,7 @@
             >
           </li>
           <li class="nav-item">
-            <a class="nav-link">Detalle de Configuracion</a>
+            <a class="nav-link">Detalle de Version</a>
           </li>
           <li class="nav-item">
             <a class="nav-link nav-link-hr active">Log</a>
@@ -54,7 +54,7 @@
                 </div>
               </div>
 
-              <div class="col-2">
+              <!--<div class="col-2">
                 <div class="form-group row">
                   <label
                     for="fecha_de_instalacion"
@@ -76,17 +76,17 @@
                   </div>
                   <div class="col-sm-1"></div>
                 </div>
-              </div>
+              </div>!-->
             </div>
             <div class="row spacio_">
-              <div class="col-12">
+              <div class="col-5">
                 <div class="form-group row">
-                  <label for="anio" class="col-sm-2 col-form-label text-log"
-                    >Municipalidad</label
+                  <label for="anio" class="col-sm-3 col-form-label text-log"
+                    >Codigo</label
                   >
-                  <div class="col-sm-2">
+                  <div class="col-sm-6">
                     <input
-                      disabled
+
                       type="text"
                       class="form-control form-control-sm"
                       name="fecha_instalacion"
@@ -94,9 +94,9 @@
                       name="codigo"
                     />
                   </div>
-                  <div class="col-sm-8">
+                <div class="col-sm-8">
                     <div class="contenedor">
-                      <input
+                      <!-- <input
                         disabled
                         type="text"
                         class="contenido form-control form-control-sm"
@@ -104,9 +104,9 @@
                         style="display: flex"
                         [(ngModel)]="this.nameMuni"
                         name="nomobre"
-                      />
+                      />-->
                       &nbsp;
-                      <button
+                     <!-- <button
                         type="button"
                         class="btn btn-secondary btn-sm btn-black"
                         data-bs-toggle="modal"
@@ -119,7 +119,7 @@
                           alt=""
                           loading="lazy"
                         />
-                      </button>
+                      </button>-->
                     </div>
                   </div>
                 </div>
@@ -127,7 +127,7 @@
             </div>
             <form action="BotonBuscar">
             <div style="text-align: center">
-              <button class="btn btn-secondary btn-search" name="filterPost" (click)="buscarDataMuni(this.codMuni)">
+              <button class="btn btn-secondary btn-search" color="warn" name="filterPost" (click)="buscarDataMuni(this.codMuni)">
                 Realizar Busqueda
               </button>
             </div>
@@ -137,28 +137,33 @@
       </div>
     </form>
 
-    <ng-container *ngIf="this.tocuchdBuscar && this._idMuni!=''  "
+    <!-- <ng-container *ngIf="this.tocuchdBuscar && this._idMuni!=''  "
       ><br /><br />
+      <ng-container >-->
+
+        <ng-container><br /><br />
       <ng-container >
         <table class="table table-hover">
           <thead>
             <tr>
+              <td>ID</td>
               <td>Fecha</td>
-              <td>Version</td>
               <td>Mensaje</td>
-              <td>Cod. Error</td>
-              <td>Estado</td>
+              <td>Log</td>
             </tr>
           </thead>
-  
-          <tbody *ngFor="let item of dataLogGeneral">
+
+          <tbody *ngFor="let item of dataLogGeneral" >
             <tr>
               <ng-container></ng-container>
-              <td>{{ item.fecha | date: "dd/MM/yyyy" }}</td>
-              <td>{{ item.nombre_pc }}</td>
+              <td>{{item.id}}</td>
+              <td>{{ item.fechaRegistro | date: "dd/MM/yyyy" }}</td>
               <td>{{ item.mensaje }}</td>
-              <td>{{ item.codError }}</td>
-              <td>{{ item.estado }}</td>
+              <ng-container  *ngIf="item.id==null?false:true">
+              <td>  <button type="button" class="btn btn-primary btn-search" (click)="DownloadLog( this.archivoCod)">Descargar</button></td>
+            </ng-container>
+
+              <td></td>
             </tr>
           </tbody>
         </table>
@@ -191,8 +196,12 @@
                 <td align="center">Municipalidad</td>
               </tr>
             </thead>
-            <tbody *ngFor="let muni of municipal | filter: filterPost">
-              <tr class="iconMouse" (click)="addMunicipalidad(muni.id,muni.nombre,muni.secEjec)" data-bs-dismiss="modal">
+         <!-- <tbody *ngFor="let muni of municipal | filter: filterPost">-->
+              <tbody *ngFor="let muni of municipal | filter: filterPost">
+
+              <!--<tr class="iconMouse" (click)="addMunicipalidad(muni.id,muni.nombre,muni.secEjec)" data-bs-dismiss="modal">-->
+                <tr class="iconMouse" (click)="addMunicipalidad(muni.id,muni.secEjec,muni.archivo)" data-bs-dismiss="modal">
+
                 <td align="center">{{ muni.secEjec }}</td>
                 <td align="center">{{ muni.nombre }}</td>
               </tr>

@@ -40,6 +40,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { UpdateConfiguracionesComponent } from './views/update-configuraciones/update-configuraciones.component';
 import { ErrorTailorModule } from '@ngneat/error-tailor';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -51,7 +52,7 @@ import { ErrorTailorModule } from '@ngneat/error-tailor';
     PageVersionComponent,
     FilterPipelog,
     UpdateConfiguracionesComponent,
-  ],
+ ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -77,7 +78,7 @@ import { ErrorTailorModule } from '@ngneat/error-tailor';
     MatTooltipModule,
     MatPaginatorModule,
     MatDialogModule,
-    MatSnackBarModule,
+    MatSnackBarModule,MatSortModule
    /* ErrorTailorModule.forRoot({
       errors: {
         useValue: {

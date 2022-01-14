@@ -1,18 +1,18 @@
 <ng-container *ngFor="let ultVersion of configs">
-  <ng-container *ngIf="ultVersion.estado == 'Activo'">
+  <ng-container *ngIf="ultVersion.estado == 'Version Liberada'" >
  <div class="row">
      <div class="col">
          <mat-form-field class="example-full-width" appearance="fill">
              <mat-label> Año </mat-label>
              <input matInput disabled
-             [(ngModel)]="ultVersion.anio" placeholder="Ex. Pizza" >
+             [(ngModel)]="anio1" placeholder="Ex. Pizza" >
 
            </mat-form-field>
      </div>
      <div class="col">
          <mat-form-field class="example-full-width" appearance="fill">
              <mat-label> Versiones </mat-label>
-             <input matInput disabled  [(ngModel)]="ultVersion.versionSrtm" placeholder="Ex. Pizza" >
+             <input matInput disabled  [(ngModel)]="ultVersion.version" placeholder="Ex. Pizza" >
            </mat-form-field>
      </div>
      <div class="col">
