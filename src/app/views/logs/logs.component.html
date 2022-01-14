@@ -1,0 +1,224 @@
+<div class="content">
+  <br /><br />
+  <h1 class="title_srtm titulo">Configuracion SRTM</h1>
+  <div class="container marc_">
+    <form class="example-form">
+      <app-page-version></app-page-version>
+      <div class="">
+        <ul class="nav nav-tabs" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/srtm/versiones"
+              >Historial de Versiones</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link">Detalle de Version</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link nav-link-hr active">Log</a>
+          </li>
+        </ul>
+        <!-- Tab LOG -->
+        <div class="tab-content">
+          <div class="">
+            <br />
+            <div class="row">
+              <div class="col-5">
+                <div class="form-group row">
+                  <label for="anio" class="col-sm-3 col-form-label text-log"
+                    >Fecha Inicio</label
+                  >
+                  <div class="col-sm-8">
+                    <input
+                      type="Date"
+                      class="form-control form-control-sm"
+                      [(ngModel)]="logFechaInicio"
+                      name="fecha_inicio"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="col-5">
+                <div class="form-group row">
+                  <label for="anio" class="col-sm-3 col-form-label text-log"
+                    >Fecha Final</label
+                  >
+                  <div class="col-sm-8">
+                    <input
+                      type="date"
+                      class="form-control form-control-sm"
+                      [(ngModel)]="logFechaFinal"
+                      name="fecha_final"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <!--<div class="col-2">
+                <div class="form-group row">
+                  <label
+                    for="fecha_de_instalacion"
+                    class="col-sm-4 col-form-label text-log"
+                    >Estado</label
+                  >
+                  <div class="col-sm-8">
+                    <select
+                      class="form-select form-select-sm"
+                      [(ngModel)]="logestado"
+                      name="estadoMuni"
+                    >
+                      <ng-container
+                        *ngFor="let estadoMuni of EstadoLog; index as i"
+                      >
+                        <option>{{ estadoMuni }}</option>
+                      </ng-container>
+                    </select>
+                  </div>
+                  <div class="col-sm-1"></div>
+                </div>
+              </div>!-->
+            </div>
+            <div class="row spacio_">
+              <div class="col-5">
+                <div class="form-group row">
+                  <label for="anio" class="col-sm-3 col-form-label text-log"
+                    >Codigo</label
+                  >
+                  <div class="col-sm-6">
+                    <input
+
+                      type="text"
+                      class="form-control form-control-sm"
+                      name="fecha_instalacion"
+                      [(ngModel)]="this.codMuni"
+                      name="codigo"
+                    />
+                  </div>
+                <div class="col-sm-8">
+                    <div class="contenedor">
+                      <!-- <input
+                        disabled
+                        type="text"
+                        class="contenido form-control form-control-sm"
+                        name="rutaArchivo"
+                        style="display: flex"
+                        [(ngModel)]="this.nameMuni"
+                        name="nomobre"
+                      />-->
+                      &nbsp;
+                     <!-- <button
+                        type="button"
+                        class="btn btn-secondary btn-sm btn-black"
+                        data-bs-toggle="modal"
+                        data-bs-target="#exampleModal"
+                        style="display: flex"
+                      >
+                        <img
+                          style="width: 20px; height: 20px"
+                          src="assets/img/search.png"
+                          alt=""
+                          loading="lazy"
+                        />
+                      </button>-->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <form action="BotonBuscar">
+            <div style="text-align: center">
+              <button class="btn btn-secondary btn-search" color="warn" name="filterPost" (click)="buscarDataMuni(this.codMuni)">
+                Realizar Busqueda
+              </button>
+            </div>
+          </form>
+        </div>
+        </div>
+      </div>
+    </form>
+
+    <!-- <ng-container *ngIf="this.tocuchdBuscar && this._idMuni!=''  "
+      ><br /><br />
+      <ng-container >-->
+
+        <ng-container><br /><br />
+      <ng-container >
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <td>ID</td>
+              <td>Fecha</td>
+              <td>Mensaje</td>
+              <td>Log</td>
+            </tr>
+          </thead>
+
+          <tbody *ngFor="let item of dataLogGeneral" >
+            <tr>
+              <ng-container></ng-container>
+              <td>{{item.id}}</td>
+              <td>{{ item.fechaRegistro | date: "dd/MM/yyyy" }}</td>
+              <td>{{ item.mensaje }}</td>
+              <ng-container  *ngIf="item.id==null?false:true">
+              <td>  <button type="button" class="btn btn-primary btn-search" (click)="DownloadLog( this.archivoCod)">Descargar</button></td>
+            </ng-container>
+
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+      </ng-container>
+    </ng-container>
+  </div>
+</div>
+
+<!--MODAL SELECCIONAR MUNICIPALIDAD-->
+<div
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="content col-sm-12">
+        <h1 class="title_srtm titulo">BUSQUEDA DE MUNICIPALIDAD</h1>
+        <br />
+        <div id="Versiones" class="container tab-pane active">
+          <input type="search" class="form-control" placeholder="Buscar Municipalidad"  name="filterPost"  [(ngModel)]="filterPost"
+          />
+          <br />
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <td align="center">Código</td>
+                <td align="center">Municipalidad</td>
+              </tr>
+            </thead>
+         <!-- <tbody *ngFor="let muni of municipal | filter: filterPost">-->
+              <tbody *ngFor="let muni of municipal | filter: filterPost">
+
+              <!--<tr class="iconMouse" (click)="addMunicipalidad(muni.id,muni.nombre,muni.secEjec)" data-bs-dismiss="modal">-->
+                <tr class="iconMouse" (click)="addMunicipalidad(muni.id,muni.secEjec,muni.archivo)" data-bs-dismiss="modal">
+
+                <td align="center">{{ muni.secEjec }}</td>
+                <td align="center">{{ muni.nombre }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <!--<button type="button" class="btn btn-primary">Seleccionar</button>-->
+        <button
+          type="button"
+          class="btn btn-secondary btn-black"
+          data-bs-dismiss="modal"
+        >
+          Salir
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
